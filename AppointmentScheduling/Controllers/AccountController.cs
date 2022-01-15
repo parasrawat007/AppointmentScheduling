@@ -29,7 +29,11 @@ namespace AppointmentScheduling.Controllers
         {
             return View();
         }
-       
+        public IActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -72,7 +76,7 @@ namespace AppointmentScheduling.Controllers
                     Email = model.Email,
                     Name = model.Name
                 };
-                var result = await _UserManger.CreateAsync(user);
+                var result = await _UserManger.CreateAsync(user,model.Password);
                 if (result.Succeeded)
                 {
                     await _UserManger.AddToRoleAsync(user, model.RoleName);
