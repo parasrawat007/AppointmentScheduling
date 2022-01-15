@@ -1,5 +1,6 @@
 ﻿using AppointmentScheduling.Models;
 using AppointmentScheduling.Models.ViewModel;
+using AppointmentScheduling.Utility;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -33,14 +34,22 @@ namespace AppointmentScheduling.Controllers
         {
             return View();
         }
-        public IActionResult Register()
+        public async Task<IActionResult> Register()
         {
+            if (!_RoleManager.RoleExistsAsync(Helper.Admin).GetAwaiter().GetResult())
+            {
+                await _RoleManager.CreateAsync(new IdentityRole(Helper.Admin));
+                await _RoleManager.CreateAsync(new IdentityRole(Helper.Patient));
+                await _RoleManager.CreateAsync(new IdentityRole(Helper.Doctor));
+            }
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
-        {
+        {            
+             //   admin@app.com   - Admin@123           
+            
             if(ModelState.IsValid)
             {
                 var user = new ApplicationUser
@@ -52,6 +61,7 @@ namespace AppointmentScheduling.Controllers
                 var result = await _UserManger.CreateAsync(user);
                 if(result.Succeeded)
                 {
+                    await _UserManger.AddToRoleAsync(user, model.RoleName);
                     await _SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
