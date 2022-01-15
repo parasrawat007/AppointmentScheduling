@@ -10,7 +10,9 @@
 else
 {
     <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Sign Up","Register","Account",routeValues:null,htmlAttributes:new  { id="RegisterLink"})</li>
-        <li>@Html.ActionLink("Sign In","Login","Account",routeValues:null,htmlAttributes:new  { id= "LoginLink" })</li>
+        @*<li>@Html.ActionLink("Sign Up","Register","Account",routeValues:null,htmlAttributes:new  { id="RegisterLink"})</li>
+        <li>@Html.ActionLink("Sign In","Login","Account",routeValues:null,htmlAttributes:new  { id= "LoginLink" })</li>*@
+        <li class="nav-item"><a id="RegisterLink" asp-action="Register" asp-controller="Account" class="nav-link text-white">Sign Up</a></li>
+        <li class="nav-item"><a id= "LoginLink" asp-action="Login" asp-controller="Account" class="nav-link text-white">Sign In</a></li>
     </ul>
 }
