@@ -17,7 +17,7 @@ namespace AppointmentScheduling.Controllers
         private readonly SignInManager<ApplicationUser> _SignInManager;
         private readonly RoleManager<IdentityRole> _RoleManager;
 
-        public AccountController(ApplicationDbContext db, UserManager<ApplicationUser> UManger, 
+        public AccountController(ApplicationDbContext db, UserManager<ApplicationUser> UManger,
             SignInManager<ApplicationUser> SManager, RoleManager<IdentityRole> RManager)
         {
             _db = db;
@@ -29,10 +29,24 @@ namespace AppointmentScheduling.Controllers
         {
             return View();
         }
-
-        public IActionResult Login()
+       
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(LoginViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Invalid Login Attempt");
+                }
+            }
+            return View(model);
         }
         public async Task<IActionResult> Register()
         {
@@ -47,26 +61,37 @@ namespace AppointmentScheduling.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
-        {            
-             //   admin@app.com   - Admin@123           
-            
-            if(ModelState.IsValid)
+        {
+            //   admin@app.com   - Admin@123           
+
+            if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
                 {
-                    UserName=model.Email,
-                    Email=model.Email,
-                    Name=model.Name
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.Name
                 };
                 var result = await _UserManger.CreateAsync(user);
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await _UserManger.AddToRoleAsync(user, model.RoleName);
                     await _SignInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Home");
                 }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            return View();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logoff()
+        {
+            await _SignInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }
