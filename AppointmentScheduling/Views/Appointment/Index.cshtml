@@ -1,0 +1,17 @@
+﻿@using AppointmentScheduling.Utility
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="container">
+        @if (User.IsInRole(Helper.Admin))
+        { 
+            <div class="form-group row col-2" id="DivDoctorList">
+                <label>Select Doctor</label>
+                @Html.DropDownList("doctorId",new SelectList(ViewBag.DoctorList,"Id","Name"),new  {@class="form-control select2" })
+            </div>
+        }
+    </div>
+</div>
+
