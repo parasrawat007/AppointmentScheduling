@@ -43,7 +43,7 @@ namespace AppointmentScheduling.Controllers
                 var result = await _SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Appointment");
                 }
                 else
                 {
