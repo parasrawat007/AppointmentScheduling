@@ -1,4 +1,5 @@
 ﻿using AppointmentScheduling.Services;
+using AppointmentScheduling.Utility;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace AppointmentScheduling.Controllers
         {
             ViewBag.DoctorList=_service.GetDoctorList();
             ViewBag.PateintList=_service.GetPateintList();
+            ViewBag.Duration = Helper.GetTimeDropDown();
             return View();
         }
     }

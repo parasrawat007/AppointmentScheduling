@@ -21,5 +21,19 @@ namespace AppointmentScheduling.Utility
                 new SelectListItem{Value=Doctor,Text=Doctor }
             };
         }
+
+        public static List<SelectListItem> GetTimeDropDown()
+        {
+            int min = 60;
+            List<SelectListItem> Duration = new List<SelectListItem>();
+            for (int i = 1; i <= 12; i++)
+            {
+                Duration.Add(new SelectListItem { Value = min.ToString(), Text = i + " Hr" });
+                min = min + 30;
+                Duration.Add(new SelectListItem { Value = min.ToString(), Text = i + " Hr 30 Min" });
+                min = min + 30;
+            }
+            return Duration;
+        }
     }
 }

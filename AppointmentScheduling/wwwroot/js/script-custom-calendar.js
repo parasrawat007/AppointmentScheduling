@@ -26,3 +26,7 @@ function onShowModal(obj, isEventDetail)
 {
     $('#AppointmentInput').modal("show");
 }
+
+function onCloseModal() {
+    $('#AppointmentInput').modal("hide");
+}
