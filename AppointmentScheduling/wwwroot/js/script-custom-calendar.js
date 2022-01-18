@@ -10,11 +10,19 @@ function InitializeCalendar(){
                 center: "title",
                 right:"month,agendaWeek,agendaDay"
             },
-            selectTable: true,
-            editable: false             
+            selectable: true,
+            editable: false,
+            select: function (event) {
+                onShowModal(event, null);
+            }
         });
     }
     catch (e) {
         alert(e);
     }
+}
+
+function onShowModal(obj, isEventDetail)
+{
+    $('#AppointmentInput').modal("show");
 }
