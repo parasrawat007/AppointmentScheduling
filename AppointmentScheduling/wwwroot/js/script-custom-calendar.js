@@ -2,9 +2,10 @@
     InitializeCalendar();
 });
 function InitializeCalendar(){
-    try {
-        
-            var calendarEl = document.getElementById('calendar');
+    try {        
+        var calendarEl = document.getElementById('calendar');
+        if (calendarEl != null)
+        {
             var calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
@@ -19,7 +20,7 @@ function InitializeCalendar(){
                 }
             });
             calendar.render();
-      
+        }
 
         //$("#calendar").fullCalendar({
         //    timezone: false,

@@ -32,6 +32,7 @@ namespace AppointmentScheduling
             );
             services.AddControllersWithViews();
             services.AddTransient<IAppointmentService, AppointmentService>();
+            services.AddHttpContextAccessor();
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
