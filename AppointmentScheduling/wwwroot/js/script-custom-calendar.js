@@ -55,31 +55,53 @@ function onCloseModal() {
     $('#AppointmentInput').modal("hide");
 }
 function onSubmitForm() {
-    var requestData =
-    {
-        Id: parseInt($("#id").val()),
-        Title: $("#title").val(),
-        Description: $("#description").val(),
-        StartDate: $("#StartDate").val(),
-        Duration: $("#duration").val(),
-        DoctorId: $("#doctorId").val(),
-        PatientId: $("#patientid").val(),
-    };
-    $.ajax({
-        url: routeurl + "/api/Appointment/SaveCalendarData",
-        type: "POST",
-        data: JSON.stringify(requestData),
-        contentType: "application/json",
-        success: function (res) {
-            if (res.status === 1 || res.status === 2) {
-                $.notify(res.message, "success");
-            } else {
-                $.notify(res.message, "error");
+    if (checkValidation()) {
+        var requestData =
+        {
+            Id: parseInt($("#id").val()),
+            Title: $("#title").val(),
+            Description: $("#description").val(),
+            StartDate: $("#StartDate").val(),
+            Duration: $("#duration").val(),
+            DoctorId: $("#doctorId").val(),
+            PatientId: $("#patientid").val(),
+        };
+        $.ajax({
+            url: routeurl + "/api/Appointment/SaveCalendarData",
+            type: "POST",
+            data: JSON.stringify(requestData),
+            contentType: "application/json",
+            success: function (res) {
+                if (res.status === 1 || res.status === 2) {
+                    $.notify(res.message, "success");
+                } else {
+                    $.notify(res.message, "error");
+                }
+            },
+            error: function (xhr) {
+                $.notify("Error", "error");
             }
-        },
-        error: function (xhr) {
-            $.notify("Error", "error");
-        }
-    });
+        });
+    }
+}
+function checkValidation()
+{
+    var isValid = true;
 
+    if ($("#title").val() === undefined || $("#title").val() === "") {
+        isValid = false;
+        $("#title").addClass('error');
+    }
+    else {
+        $("#title").removeClass('error');
+    }
+
+    if ($("#StartDate").val() === undefined || $("#StartDate").val() === "") {
+        isValid = false;
+        $("#StartDate").addClass('error');
+    }
+    else {
+        $("#StartDate").removeClass('error');
+    }
+    return isValid;
 }
