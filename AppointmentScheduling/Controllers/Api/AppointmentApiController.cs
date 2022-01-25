@@ -53,5 +53,36 @@ namespace AppointmentScheduling.Controllers.Api
            
             return Ok(response);
         }
+        [HttpGet]
+        [Route("GetCalendarData")]
+        public IActionResult GetCalendarData(string DoctorId)
+        {
+            CommonResponse<List<AppointmentViewModel>> response = new();
+            try
+            {
+                if(role==Helper.Patient)
+                {
+                    response.dataenum = _appointmentService.PatientEventsById(loginUserId);
+                    response.status = Helper.success_code;
+                }
+                else if (role == Helper.Doctor)
+                {
+                    response.dataenum = _appointmentService.DoctorsEventById(loginUserId);
+                    response.status = Helper.success_code;
+                }
+                else
+                {
+                    response.dataenum = _appointmentService.DoctorsEventById(DoctorId);
+                    response.status = Helper.success_code;
+                }
+            }
+            catch (Exception)
+            {
+
+                response.message = e.Message;
+                response.status = Helper.failure_code;
+            }
+            return Ok(response);
+        }
     }
 }

@@ -47,7 +47,7 @@ namespace AppointmentScheduling.Services
            
         }
 
-        public List<AppointmentViewModel> DoctorsEvents(string DoctorId)
+        public List<AppointmentViewModel> DoctorsEventsById(string DoctorId)
         {
             return _db.Appointments.Where(a => a.DoctorId == DoctorId).Select(a=>new AppointmentViewModel { 
                 DoctorId=DoctorId,
@@ -93,7 +93,7 @@ namespace AppointmentScheduling.Services
             return doctors;
         }
 
-        public List<AppointmentViewModel> PatientEvents(string PatientId)
+        public List<AppointmentViewModel> PatientEventsById(string PatientId)
         {
             return _db.Appointments.Where(a => a.PatientId == PatientId).Select(a => new AppointmentViewModel
             {
