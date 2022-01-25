@@ -76,7 +76,7 @@ namespace AppointmentScheduling.Controllers.Api
                     response.status = Helper.success_code;
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
                 response.message = e.Message;
