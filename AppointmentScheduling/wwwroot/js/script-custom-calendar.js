@@ -1,5 +1,10 @@
-﻿$(document).ready(function () {
+﻿var routeurl = location.protocol + "//"+location.host;
+$(document).ready(function () {
     InitializeCalendar();
+    $('#StartDate').kendoDateTimePicker({
+        value: new Date(),
+        dateInput: false
+    });
 });
 function InitializeCalendar(){
     try {        
@@ -48,4 +53,33 @@ function onShowModal(obj, isEventDetail)
 
 function onCloseModal() {
     $('#AppointmentInput').modal("hide");
+}
+function onSubmitForm() {
+    var requestData =
+    {
+        Id: parseInt($("#id").val()),
+        Title: $("#title").val(),
+        Description: $("#description").val(),
+        StartDate: $("#StartDate").val(),
+        Duration: $("#duration").val(),
+        DoctorId: $("#doctorId").val(),
+        PatientId: $("#patientid").val(),
+    };
+    $.ajax({
+        url: routeurl + "/api/Appointment/SaveCalendarData",
+        type: "POST",
+        data: JSON.stringify(requestData),
+        contentType: "application/json",
+        success: function (res) {
+            if (res.status === 1 || res.status === 2) {
+                $.notify(res.message, "success");
+            } else {
+                $.notify(res.message, "error");
+            }
+        },
+        error: function (xhr) {
+            $.notify("Error", "error");
+        }
+    });
+
 }

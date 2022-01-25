@@ -28,8 +28,8 @@ namespace AppointmentScheduling.Controllers.Api
         }
 
         [HttpPost]
-        [Route("SaveCalenderData")]
-        public IActionResult SaveCalenderData(AppointmentViewModel model)
+        [Route("SaveCalendarData")]
+        public IActionResult SaveCalendarData(AppointmentViewModel model)
         {
             CommonResponse<int> response = new();
             try
@@ -39,7 +39,7 @@ namespace AppointmentScheduling.Controllers.Api
                 {
                     response.message = Helper.appointmentUpdated;
                 }
-                else if (response.status==2)
+                else if (response.status == 2)
                 {
                     response.message = Helper.appointmentAdded;
                 }
@@ -51,7 +51,7 @@ namespace AppointmentScheduling.Controllers.Api
                 response.status = Helper.failure_code;
             }
            
-            return Ok(response  );
+            return Ok(response);
         }
     }
 }

@@ -19,20 +19,25 @@
                         <label for="description">Description</label>
                         <textarea id="description" maxlength="100" type="tel" class="form-control"></textarea>
                     </div>
+
                     <div class="form-group">
                         <label for="title">Select Patient</label>
                         <select id="patientid" asp-items="@(new SelectList( ViewBag.PateintList,"Id","Name"))" class="form-control">
                         </select>
                     </div>
                     <div class="form-group">
+                        <label for="StartDate">Description</label>
+                        <input id="StartDate" class="form-control" />
+                    </div>
+                    <div class="form-group">
                         <label for="title">Duration</label>
                         <select id="duration" asp-items="@ViewBag.Duration" class="form-control">
                         </select>
                     </div>
-                    <input type="hidden" id="id"  />
+                    <input type="hidden" id="id" />
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" onclick="onCloseModal();">Close</button>
-                        <button type="submit" id="btn-submit" class="btn btn-success" onclick="onSubmitForm();">Submit</button>
+                        <button type="button" id="btn-submit" class="btn btn-success" onclick="onSubmitForm();">Submit</button>
                     </div>
                 </div>
             </form>

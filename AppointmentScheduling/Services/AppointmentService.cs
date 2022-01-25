@@ -28,7 +28,8 @@ namespace AppointmentScheduling.Services
             }
             else
             {
-                Appointment appointment = new Appointment { 
+                Appointment appointment = new()
+                { 
                     Title=model.Title,
                     StartDate=StartDate,
                     EndDate=EndDate,
