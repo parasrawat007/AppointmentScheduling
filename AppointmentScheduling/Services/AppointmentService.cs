@@ -62,6 +62,24 @@ namespace AppointmentScheduling.Services
             }).ToList();
         }
 
+        public AppointmentViewModel GetById(int id)
+        {
+            return _db.Appointments.Where(a => a.Id == id).Select(a => new AppointmentViewModel
+            {
+                DoctorId = a.DoctorId,
+                AdminId = a.AdminId,
+                Description = a.Description,
+                Duration = a.Duration,
+                PatientId = a.PatientId,
+                Title = a.Title,
+                StartDate = a.StartDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                EndDate = a.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
+                IsDoctorApproved = a.IsDoctorApproved,
+                PatientName=_db.Users.SingleOrDefault(x=>x.Id== a.PatientId).Name,
+                DoctorName=_db.Users.SingleOrDefault(x=>x.Id== a.DoctorId).Name,
+            }).SingleOrDefault();
+        }
+
         public List<DoctorViewModel> GetDoctorList()
         {
             /*
