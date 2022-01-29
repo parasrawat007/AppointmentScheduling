@@ -44,8 +44,7 @@ function InitializeCalendar(){
                                     });
                                 });
                                 successCallback(events);
-                            }
-                            
+                            }                            
                         },
                         error: function (xhr) {
                             $.notify("Error", "error");
@@ -53,7 +52,7 @@ function InitializeCalendar(){
                     });
                 },
                 eventClick: function (info) {
-                    getEventDetailsByEventId(info.Event);
+                    getEventDetailsByEventId(info.event);
                 }
             });
             calendar.render();
@@ -80,7 +79,15 @@ function InitializeCalendar(){
 
 function onShowModal(obj, isEventDetail)
 {
-  
+    if (isEventDetail != null) {
+        $("#id").val(obj.id);
+        $("#title").val(obj.title);
+        $("#description").val(obj.description);
+        $("#StartDate").val(obj.startDate);
+        $("#duration").val(obj.duration);
+        $("#doctorId").val(obj.doctorId);
+        $("#patientid").val(obj.patientId);
+    }
     $('#AppointmentInput').modal("show");
 }
 
@@ -142,15 +149,18 @@ function checkValidation()
 
 function getEventDetailsByEventId(info)
 {
-    $.ajax({
-        url: routeurl + "GetCalendarDataById/" + $("#doctorId").info.id,
-        type: "GET",
-        dataType: "json",
-        success: function (res) {
-            var events = [];
-            if (res.status === 1 && res.dataenum != undefined) {
-                onShowModal(res.dataenum,true);
-            }   
-        }
-    });
+        $.ajax({
+            url: routeurl + "/api/Appointment/GetCalendarDataById/" + info.id,
+            type: "GET",
+            dataType: "JSON",
+            success: function (res) {
+                if (res.status === 1 && res.dataenum != undefined) {
+                    onShowModal(res.dataenum, true);
+                }
+            },
+            complete: function () {
+                console.log('abc');
+            }
+        });
+   
 }
