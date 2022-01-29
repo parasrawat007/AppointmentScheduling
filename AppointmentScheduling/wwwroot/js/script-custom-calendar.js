@@ -6,12 +6,13 @@ $(document).ready(function () {
         dateInput: false
     });
 });
+var calendar;
 function InitializeCalendar(){
     try {        
         var calendarEl = document.getElementById('calendar');
         if (calendarEl != null)
         {
-            var calendar = new FullCalendar.Calendar(calendarEl, {
+                calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 headerToolbar: {
                     left: "prev,next,today",
@@ -157,10 +158,10 @@ function getEventDetailsByEventId(info)
                 if (res.status === 1 && res.dataenum != undefined) {
                     onShowModal(res.dataenum, true);
                 }
-            },
-            complete: function () {
-                console.log('abc');
             }
-        });
-   
+        });   
+}
+
+function onDoctorChange() {
+    calendar.refetchEvents(); 
 }
