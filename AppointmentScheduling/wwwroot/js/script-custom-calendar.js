@@ -89,6 +89,10 @@ function onShowModal(obj, isEventDetail)
         $("#doctorId").val(obj.doctorId);
         $("#patientid").val(obj.patientId);
     }
+    else {
+        $("#StartDate").val(obj.startStr + " " + new moment().format("hh:mm A"));
+        $("#id").val(0);
+    }
     $('#AppointmentInput').modal("show");
 }
 
