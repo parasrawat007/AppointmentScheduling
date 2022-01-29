@@ -10,7 +10,7 @@ namespace AppointmentScheduling.Services
         List<PateintViewModel> GetPateintList();
         Task<int> AddUpdate(AppointmentViewModel model);
 
-        List<AppointmentViewModel> DoctorsEventById(string DoctorId);
+        List<AppointmentViewModel> DoctorEventsById(string DoctorId);
         List<AppointmentViewModel> PatientEventsById(string PatientId);
     }
 }

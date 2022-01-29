@@ -67,12 +67,12 @@ namespace AppointmentScheduling.Controllers.Api
                 }
                 else if (role == Helper.Doctor)
                 {
-                    response.dataenum = _appointmentService.DoctorsEventById(loginUserId);
+                    response.dataenum = _appointmentService.DoctorEventsById(loginUserId);
                     response.status = Helper.success_code;
                 }
                 else
                 {
-                    response.dataenum = _appointmentService.DoctorsEventById(DoctorId);
+                    response.dataenum = _appointmentService.DoctorEventsById(DoctorId);
                     response.status = Helper.success_code;
                 }
             }

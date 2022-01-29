@@ -22,6 +22,35 @@ function InitializeCalendar(){
                 editable: false,
                 select: function (event) {
                     onShowModal(event, null);
+                },
+                eventDisplay:"block",
+                events: function (fetchInfo, successCallback, faliureCallback) {
+                    $.ajax({
+                        url: routeurl + "/api/Appointment/GetCalendarData?DoctorId=" + $("#doctorId").val(),
+                        type: "GET",                       
+                        dataType: "json",
+                        success: function (res) {
+                            var events = [];
+                            if (res.status === 1) {
+                                $.each(res.dataenum, function (i, data) {
+                                    events.push({
+                                        title: data.title,
+                                        description: data.description,
+                                        start: data.startDate,
+                                        end: data.endDate,
+                                        backgroundColor: data.isDoctorApproved ? "#28a745" : "#dc3545",
+                                        textColor: "white",
+                                        id:data.id
+                                    });
+                                });
+                                successCallback(events);
+                            }
+                            
+                        },
+                        error: function (xhr) {
+                            $.notify("Error", "error");
+                        }
+                    });
                 }
             });
             calendar.render();
@@ -74,6 +103,7 @@ function onSubmitForm() {
             success: function (res) {
                 if (res.status === 1 || res.status === 2) {
                     $.notify(res.message, "success");
+                    onCloseModal();
                 } else {
                     $.notify(res.message, "error");
                 }
