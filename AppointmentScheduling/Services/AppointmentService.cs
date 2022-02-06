@@ -28,6 +28,21 @@ namespace AppointmentScheduling.Services
             var doctor = _db.Users.FirstOrDefault(u => u.Id==model.DoctorId);
             if (model != null && model.Id>0)
             {
+                var appointmet = _db.Appointments.FirstOrDefault(a => a.Id == model.Id);
+
+                appointmet.Title = model.Title;
+                appointmet.StartDate = StartDate;
+                appointmet.EndDate = EndDate;
+                appointmet.Duration = model.Duration;
+                appointmet.Description = model.Description;
+                appointmet.DoctorId = model.DoctorId;
+                appointmet.PatientId = model.PatientId;
+                appointmet.AdminId = model.AdminId;
+                appointmet.IsDoctorApproved = false;
+
+                _db.Appointments.Update(appointmet);
+                await _db.SaveChangesAsync();
+              
                 return 1;
             }
             else
