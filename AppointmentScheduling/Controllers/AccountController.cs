@@ -84,8 +84,12 @@ namespace AppointmentScheduling.Controllers
                 if (result.Succeeded)
                 {
                     await _UserManger.AddToRoleAsync(user, model.RoleName);
-                    await _SignInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
+                    if(!User.IsInRole(Helper.Admin))
+                    {
+                        await _SignInManager.SignInAsync(user, isPersistent: false);
+                    }
+                   
+                    return RedirectToAction("Index", "Appointment");
                 }
                 foreach (var error in result.Errors)
                 {
