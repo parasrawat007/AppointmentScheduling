@@ -97,11 +97,16 @@ function onShowModal(obj, isEventDetail)
         }
         else {
             $("#status").html("Pending");
+            $("#btnsubmit").removeClass("d-none");
+            $("#btnconfirm").removeClass("d-none");
         }
-        
+        $("#btndelete").removeClass("d-none");
+      
     }
     else {
         $("#StartDate").val(obj.startStr + " " + new moment().format("hh:mm A"));
+        $("#btndelete").addClass("d-none");
+        $("#btnsubmit").removeClass("d-none");
         $("#id").val(0);
     }
     $('#AppointmentInput').modal("show");
@@ -113,8 +118,7 @@ function onCloseModal() {
     $("#title").val('');
     $("#description").val('');
     $("#StartDate").val('');
-    $("#duration").val('');
-    $("#patientid").val('');
+   
     $('#AppointmentInput').modal("hide");
 }
 function onSubmitForm() {
