@@ -6,6 +6,16 @@
 }
 
 <div class="row">
+
+    @if(TempData.ContainsKey("NewAdminSignUp"))//Stays in memory for single redirect
+    {
+        <div class="container">
+            <div class="alert alert-success alert-dismissible" >
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+                <strong>Account Created For @TempData["NewAdminSignUp"] </strong>
+            </div>
+        </div>
+    }
     <div class="container">
         @if (User.IsInRole(Helper.Admin))
         { 
