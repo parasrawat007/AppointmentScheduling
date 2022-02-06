@@ -14,26 +14,41 @@ namespace AppointmentScheduling.Utility
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
             MailjetClient client = new MailjetClient("e73fb71f954b2963ed687c1b444057c7","f8d2cb375114642c70334971d28413b1");
+
             MailjetRequest request = new MailjetRequest
             {
                 Resource = Send.Resource,
             }
-               .Property(Send.Messages, new JArray {
+           .Property(Send.FromEmail, "parasrawat67@gmail.com")
+           .Property(Send.FromName, "Appointment Scheduler")
+           .Property(Send.Subject, subject)
+           .Property(Send.HtmlPart,htmlMessage)
+           .Property(Send.Recipients, new JArray {
                 new JObject {
-                 {"From", new JObject {
-                  {"Email", "parasrawat67@gmail.com"},
-                  {"Name", "Appointment Scheduler"}
-                  }},
-                 {"To", new JArray {
-                  new JObject {
-                   {"Email",email},
-                   }
-                  }},
-                 {"Subject",subject},               
-                 {"HTMLPart", htmlMessage}
+                 {"Email", email}
                  }
-                   });
+               });
             MailjetResponse response = await client.PostAsync(request);
+            //MailjetRequest request = new MailjetRequest
+            //{
+            //    Resource = Send.Resource,
+            //}
+            //   .Property(Send.Messages, new JArray {
+            //    new JObject {
+            //     {"From", new JObject {
+            //      {"Email", "parasrawat67@gmail.com"},
+            //      {"Name", "Appointment Scheduler"}
+            //      }},
+            //     {"To", new JArray {
+            //      new JObject {
+            //       {"Email",email},
+            //       }
+            //      }},
+            //     {"Subject",subject},               
+            //     {"HTMLPart", htmlMessage}
+            //     }
+            //       });
+           // MailjetResponse response = await client.PostAsync(request);
         }
     }
 }
