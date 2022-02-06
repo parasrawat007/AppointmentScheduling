@@ -41,7 +41,10 @@ namespace AppointmentScheduling
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });//For Session
-            services.AddScoped<IEmailSender, EmailSender>(); 
+            services.AddScoped<IEmailSender, EmailSender>(); //MailJet
+            services.ConfigureApplicationCookie(option => {
+                option.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Home/AccessDenied");
+            });
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();//For Identity
         }
 
