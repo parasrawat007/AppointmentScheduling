@@ -1,3 +1,4 @@
+using AppointmentScheduling.DbInitializer;
 using AppointmentScheduling.Models;
 using AppointmentScheduling.Services;
 using AppointmentScheduling.Utility;
@@ -42,14 +43,15 @@ namespace AppointmentScheduling
                 options.Cookie.IsEssential = true;
             });//For Session
             services.AddScoped<IEmailSender, EmailSender>(); //MailJet
+            services.AddScoped<IDbInitializer, DbInitializer.DbInitializer>(); //Adding Db initializer
             services.ConfigureApplicationCookie(option => {
-                option.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Home/AccessDenied");
+                option.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Home/AccessDenied"); //For overriding AccessDenied path
             });
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();//For Identity
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -70,6 +72,7 @@ namespace AppointmentScheduling
 
             app.UseAuthorization();
             app.UseSession();
+            dbInitializer.Initialize();//Calling Db initializer
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
