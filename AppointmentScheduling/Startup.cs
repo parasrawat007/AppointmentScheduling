@@ -31,9 +31,15 @@ namespace AppointmentScheduling
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
             services.AddControllersWithViews();
-            services.AddTransient<IAppointmentService, AppointmentService>();
-            services.AddHttpContextAccessor();
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddTransient<IAppointmentService, AppointmentService>();//For User Service
+            services.AddHttpContextAccessor();//For Identity
+            services.AddDistributedMemoryCache(); //For Session
+            services.AddSession(options=> {
+                options.IdleTimeout = TimeSpan.FromDays(10);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });//For Session
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();//For Identity
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,14 +56,14 @@ namespace AppointmentScheduling
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles();   //For Static Resouces
 
-            app.UseRouting();
+            app.UseRouting();      //for Routing
 
-            app.UseAuthentication();
+            app.UseAuthentication(); 
 
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

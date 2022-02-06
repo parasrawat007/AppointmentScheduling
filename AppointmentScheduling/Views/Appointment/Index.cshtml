@@ -1,4 +1,6 @@
 ﻿@using AppointmentScheduling.Utility
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 @{
     ViewData["Title"] = "Index";
 }
@@ -18,3 +20,7 @@
 </div>
 <partial name="_AddEditAppointment" />
 
+<div class="text-right pt-2">
+
+    <p>@HttpContextAccessor.HttpContext.Session.GetString("SSUserName")'s Account Is Logged In</p>
+</div>
