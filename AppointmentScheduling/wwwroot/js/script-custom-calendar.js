@@ -92,6 +92,8 @@ function onShowModal(obj, isEventDetail)
         $("#doctorName").html(obj.doctorName);
         if (obj.isDoctorApproved) {
             $("#status").html("Approved");
+            $("#btnconfirm").addClass("d-none");
+            $("#btnsubmit").addClass("d-none");
         }
         else {
             $("#status").html("Pending");
